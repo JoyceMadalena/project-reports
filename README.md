@@ -1,36 +1,380 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Reports
 
-## Getting Started
+## Sobre o projeto
 
-First, run the development server:
+O Project Reports é uma aplicação web interna desenvolvida para gerenciamento de projetos, equipe e relatórios técnicos.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+O sistema foi pensado para ambientes institucionais e equipes que precisam:
+
+- organizar projetos internos;
+- controlar acessos por perfil de usuário;
+- gerenciar membros da equipe;
+- criar relatórios técnicos futuramente em Markdown;
+- acompanhar projetos ativos;
+- centralizar informações operacionais.
+
+A proposta do sistema é funcionar como uma plataforma administrativa privada, onde apenas usuários autenticados possuem acesso.
+
+---
+
+# Objetivos do projeto
+
+## Objetivo principal
+
+Criar uma plataforma de gerenciamento interno de projetos com autenticação, controle de permissões e organização de relatórios.
+
+---
+
+## Objetivos específicos
+
+- Implementar autenticação de usuários;
+- Criar controle de acesso por perfil;
+- Permitir gerenciamento da equipe;
+- Criar CRUD de projetos;
+- Desenvolver estrutura para relatórios em Markdown;
+- Criar dashboard administrativo;
+- Organizar projetos por usuários e permissões;
+- Permitir escalabilidade futura do sistema.
+
+---
+
+# Tecnologias utilizadas
+
+## Frontend
+
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+
+---
+
+## Backend
+
+- Next.js API Routes
+- Prisma ORM
+- PostgreSQL
+
+---
+
+## Banco de dados
+
+- PostgreSQL
+- Prisma Client
+- Prisma Migrate
+- Prisma Studio
+
+---
+
+## Segurança e autenticação
+
+- bcrypt
+- Cookies de sessão
+- Controle de roles
+
+---
+
+## Bibliotecas auxiliares
+
+- lucide-react
+
+---
+
+# Estrutura geral do projeto
+
+```text
+src/
+ ├── app/
+ │    ├── api/
+ │    ├── dashboard/
+ │    ├── login/
+ │    └── page.tsx
+ │
+ ├── components/
+ │    └── team/
+ │
+ ├── lib/
+ │    ├── prisma.ts
+ │    └── auth.ts
+ │
+ └── generated/
+      └── prisma/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Estrutura das principais rotas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Autenticação
 
-## Learn More
+```text
+/login
+/api/login
+/api/register
+/api/me
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dashboard
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+/dashboard
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Equipe
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+/dashboard/team
+/dashboard/team/new
+/dashboard/team/[id]/edit
+```
+
+---
+
+## Projetos
+
+```text
+/dashboard/projects
+/dashboard/projects/new
+```
+
+---
+
+# Estrutura do banco de dados
+
+## User
+
+Responsável pelo gerenciamento dos usuários do sistema.
+
+### Campos principais
+
+- id
+- name
+- email
+- password
+- role
+- createdAt
+
+---
+
+## Project
+
+Responsável pelos projetos cadastrados.
+
+### Campos principais
+
+- id
+- name
+- slug
+- description
+- status
+- createdAt
+
+---
+
+## Report
+
+Estrutura reservada para relatórios futuros.
+
+### Objetivo
+
+- armazenar relatórios em Markdown;
+- relacionar relatórios aos projetos;
+- controlar permissões por usuário.
+
+---
+
+# Controle de acesso
+
+O sistema possui controle de permissões por role.
+
+## Roles disponíveis
+
+### ADMIN
+
+Possui acesso total ao sistema.
+
+Pode:
+
+- cadastrar membros;
+- editar membros;
+- excluir membros;
+- criar projetos;
+- visualizar equipe;
+- gerenciar permissões.
+
+---
+
+### MANAGER
+
+Perfil intermediário.
+
+Pode:
+
+- gerenciar projetos específicos;
+- criar relatórios;
+- acompanhar projetos.
+
+---
+
+### MEMBER
+
+Perfil básico.
+
+Pode:
+
+- visualizar projetos autorizados;
+- acessar relatórios permitidos.
+
+---
+
+# Sistema de autenticação
+
+A autenticação funciona através de:
+
+- validação de email e senha;
+- senha criptografada com bcrypt;
+- sessão salva em cookie;
+- leitura do usuário autenticado via auth.ts.
+
+---
+
+# Funcionalidades implementadas
+
+## Autenticação
+
+- Login funcional;
+- Sessão por cookie;
+- Validação de usuário;
+- Controle de acesso.
+
+---
+
+## Dashboard
+
+- Dashboard inicial;
+- Dados reais do banco;
+- Quantidade de projetos;
+- Quantidade de usuários;
+- Quantidade de relatórios.
+
+---
+
+## Equipe
+
+- Listagem de membros;
+- Cadastro de membros;
+- Edição de membros;
+- Exclusão de membros;
+- Controle de permissões.
+
+---
+
+## Segurança
+
+- Apenas ADMIN pode gerenciar equipe;
+- Usuário não pode excluir a própria conta;
+- Sistema impede exclusão do último administrador.
+
+---
+
+## Projetos
+
+- Estrutura inicial da área de projetos;
+- API de projetos;
+- Página de listagem.
+
+---
+
+# Fluxo atual do sistema
+
+```text
+Login
+   ↓
+Dashboard
+   ↓
+Projetos
+   ↓
+Equipe
+   ↓
+Gerenciamento interno
+```
+
+---
+
+# Etapas futuras do projeto
+
+## Projetos
+
+- Criar formulário de novo projeto;
+- Editar projetos;
+- Excluir projetos;
+- Relacionar membros aos projetos.
+
+---
+
+## Relatórios
+
+- Criar editor Markdown;
+- Salvar relatórios no banco;
+- Renderizar Markdown;
+- Controle de acesso por relatório.
+
+---
+
+## Dashboard
+
+- Melhorar métricas;
+- Gráficos;
+- Indicadores operacionais;
+- Timeline de projetos.
+
+---
+
+## Segurança
+
+- Middleware de autenticação;
+- Proteção avançada de rotas;
+- Persistência robusta de sessão.
+
+---
+
+## UX/UI
+
+- Sidebar administrativa;
+- Tema claro/escuro;
+- Melhorias responsivas;
+- Componentização.
+
+---
+
+# Deploy planejado
+
+## Frontend
+
+- Vercel
+
+---
+
+## Banco de dados
+
+- PostgreSQL persistente
+- Neon ou Supabase futuramente
+
+---
+
+# Considerações finais
+
+O Project Reports está sendo desenvolvido como uma plataforma escalável de gerenciamento interno, focada em organização de projetos, permissões de equipe e centralização de relatórios.
+
+A estrutura atual já possui:
+
+- autenticação;
+- controle de acesso;
+- CRUD parcial;
+- integração com banco de dados;
+- organização modular;
+- base preparada para cresc
